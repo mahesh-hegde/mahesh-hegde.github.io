@@ -12,7 +12,7 @@ paginate=3
 
 [params]
 mode="toggle"
-useCDN=false
+useCDN=true
 
 [[params.social]]
 name = "GitHub"
