@@ -25,6 +25,8 @@ Usually, when we add threads using `pragma omp parallel for` directive, we expec
 
 But surprisingly, this doesn't give the results you would expect. In fact, the run time strictly increases with number of threads.
 
+![Counter-intuitive results with naive openmp pragma](omp_rand_critical_section/Screenshot_Before.png)
+
 I was surprised, but seeing that everyone got the same results, I too first ignored the problem. But it was kind of a surprising result.
 
 However, later I realized the problem. `rand()` is called from all threads. Each subsequent output of `rand()` is different so apparently it stores some global state. And usually that means locking.
@@ -57,7 +59,9 @@ Solution? This is what I arrived at with some fiddling. Basically using a local,
 	return 4 * (double)count/nIter;
 ```
 
-This fixes it. But there's still a limit to parallelism depending on your machine's specs, and there may be further bottlenecks in the program as well.
+This fixes the speed problem. But there's still a limit to parallelism depending on your machine's specs, and there may be further bottlenecks in the program as well.
 
-But for the purpose of the lab, I get a decent graph which shows an increase in speed. :P
+But for the purpose of the lab, I get a decent graph which shows an increase in speed :P.
+
+![After eliminating critical section](omp_rand_critical_section/Screenshot_After.png)
 
