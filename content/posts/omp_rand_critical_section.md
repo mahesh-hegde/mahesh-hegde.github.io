@@ -41,7 +41,12 @@ So rand() is obtaining a mutex, which is negating any benefit we get from OpenMP
 
 Solution? This is what I arrived at with some fiddling. Basically using a local, reentrant version of `rand` - called `rand_r` and using a private variable to store the random state.
 
+By doing this, each thread has a local state for random number generation. Thus locking will not be needed.
+
 ```c
+	#pragma omp parallel
+	{
+	int localCount = 0;
 	// This is the seed value for rand_r function.
 	// (should actually use something better here than clock)
 	unsigned int randomState = clock();
