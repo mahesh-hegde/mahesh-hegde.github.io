@@ -1,6 +1,6 @@
 ---
 title: "OpenMP and rand() function - A small story"
-date: 2022-09-13T07:49:21+05:30
+date: 2023-01-07T18:35:13+05:30
 draft: false
 tags: [c, performance]
 ---
@@ -12,13 +12,13 @@ First program is to find the value of `Pi` using Monte carlo methods. We have to
 Usually, when we add threads using `pragma omp parallel for` directive, we expect the program to take less time. Here's an implementation that everyone wrote:
 
 ```c
-	#pragma omp parallel for
-	for (int i = 0; i < nIter; i++) {
-		x = (double)rand() / RAND_MAX;
-		y = (double)rand() / RAND_MAX;
-		if ((x*x + y*y) <= 1) count++;
-	}
-	return 4 * (double)count/nIter;
+#pragma omp parallel for
+for (int i = 0; i < nIter; i++) {
+	x = (double)rand() / RAND_MAX;
+	y = (double)rand() / RAND_MAX;
+	if ((x*x + y*y) <= 1) count++;
+}
+return 4 * (double)count/nIter;
 ```
 
 But surprisingly, this doesn't give the results you would expect. In fact, the run time strictly increases with number of threads.
@@ -44,22 +44,22 @@ Solution? This is what I arrived at with some fiddling. Basically using a local,
 By doing this, each thread has a local state for random number generation. Thus locking will not be needed.
 
 ```c
-	#pragma omp parallel
-	{
-	int localCount = 0;
-	// This is the seed value for rand_r function.
-	// (should actually use something better here than clock)
-	unsigned int randomState = clock();
-	#pragma omp for
-	for (int i = 0; i < nIter; i++) {
-		x = (double)rand_r(&randomState) / RAND_MAX;
-		y = (double)rand_r(&randomState) / RAND_MAX;
-		if ((x*x + y*y) <= 1) localCount++;
-	}
-	#pragma omp critical
-	count += localCount;
-	}
-	return 4 * (double)count/nIter;
+#pragma omp parallel
+{
+int localCount = 0;
+// This is the seed value for rand_r function.
+// (should actually use something better here than clock)
+unsigned int randomState = clock();
+#pragma omp for
+for (int i = 0; i < nIter; i++) {
+	x = (double)rand_r(&randomState) / RAND_MAX;
+	y = (double)rand_r(&randomState) / RAND_MAX;
+	if ((x*x + y*y) <= 1) localCount++;
+}
+#pragma omp critical
+count += localCount;
+}
+return 4 * (double)count/nIter;
 ```
 
 This fixes the speed problem. But there's still a limit to parallelism depending on your machine's specs, and there may be further bottlenecks in the program as well.
