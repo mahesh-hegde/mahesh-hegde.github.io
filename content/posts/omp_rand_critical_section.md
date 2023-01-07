@@ -25,7 +25,7 @@ Usually, when we add threads using `pragma omp parallel for` directive, we expec
 
 But surprisingly, this doesn't give the results you would expect. In fact, the run time strictly increases with number of threads.
 
-![Counter-intuitive results with naive openmp pragma](images/omp_rand_critical_section/Screenshot_Before.png)
+![Counter-intuitive results with naive openmp pragma](/images/omp_rand_critical_section/Screenshot_Before.png)
 
 I was surprised, but seeing that everyone got the same results, I too first ignored the problem. But it was kind of a surprising result.
 
@@ -63,5 +63,5 @@ This fixes the speed problem. But there's still a limit to parallelism depending
 
 But for the purpose of the lab, I get a decent graph which shows an increase in speed :P.
 
-![After eliminating critical section](images/omp_rand_critical_section/Screenshot_After.png)
+![After eliminating critical section](/images/omp_rand_critical_section/Screenshot_After.png)
 
