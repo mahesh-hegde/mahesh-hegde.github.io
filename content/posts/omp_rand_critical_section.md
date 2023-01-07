@@ -5,8 +5,6 @@ draft: false
 tags: [c, performance]
 ---
 
-# OpenMP and rand() function - A small story
-
 I have a parallel programming subject this semester, and as usual, there's also a lab in which we try and execute small programs. Mostly OpenMP programs.
 
 First program is to find the value of `Pi` using Monte carlo methods. We have to then measure the performance with different number of threads, and tabulate it.
