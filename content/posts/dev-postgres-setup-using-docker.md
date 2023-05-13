@@ -7,7 +7,7 @@ draft: false
 
 Installing postgres the traditional way may not be very convenient for many reasons. This post describes how to run postgres for local development using docker and docker compose.
 
-There's already some amount of documentation for official postgresql official docker image. But few things are less than obvious if you're a beginner like me.
+There's already some amount of documentation for postgresql official docker image. But few things are less than obvious if you're a beginner like me.
 
 ## Running postgres as standalone docker container
 
