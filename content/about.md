@@ -5,12 +5,11 @@ date: 2022-09-13T07:54:01+05:30
 
 Hi, I am Mahesh.
 
-I am a CSE Undergrad originally from North Kanara and currently studying in Bangalore.
+I am a soon-to-graduate CSE student, originally from North Kanara and currently studying in Bangalore.
 
+Broadly, my interests in computer science revolve around systems, languages and tools.
 
-__I am looking for a 4-6 month internship in this spring. Please drop me an email at__ `net.mahesh29 [at] gmail.com` __if you're hiring interns / new grad SDE around Bangalore, or remotely in India.__
-
-__I have a good hold of fundamental concepts and problem solving skills, along with some experience in Go, Java, C, Linux command line etc..__
+You can contact me through email, `net [dot] mahesh29 [at] gmail [dot] com`, or through twitter handle `@never_inline`.
 
 ## Projects
 1. [jnigen](https://github.com/dart-lang/jnigen) - An experimental JNI bindings generator for Dart and Flutter. It's a GSoC 2022 Project.
