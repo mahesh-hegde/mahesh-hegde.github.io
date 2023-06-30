@@ -1,5 +1,5 @@
 ---
-title: "Postgres setup for local development using Docker"
+title: "Running Postgres Locally for Back-end Development Using Docker"
 type: "post"
 date: 2023-05-13T11:36:39+05:30
 tags: [docker, postgres]

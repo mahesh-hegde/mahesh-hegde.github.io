@@ -6,7 +6,7 @@ draft: false
 tags: [c, performance]
 ---
 
-I have a parallel programming subject this semester, and as usual, there's also a lab in which we try and execute small programs. Mostly OpenMP programs.
+I have a parallel programming subject this semester, and as usual, there's also a lab in which we try and execute small programs (mostly using OpenMP).
 
 First program is to find the value of `Pi` using Monte carlo methods. We have to then measure the performance with different number of threads, and tabulate it.
 

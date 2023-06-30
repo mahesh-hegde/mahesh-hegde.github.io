@@ -3,14 +3,14 @@ title: "Non-algorithm optimization of K closest elements Java solution"
 type: "post"
 date: 2023-03-21T07:07:17+05:30
 draft: false
-tags: [leetcode, java]
+tags: [leetcode, java, performance]
 ---
 
 I am a weird creature in my friend circle for using Java to do DSA problems. (Everyone else uses C++). I am not that good anyway in Leetcode, so at least I will learn some more Java by doing this.
 
 Here's the puzzle I was attempting to solve: Given a sorted array and an integer `x`, find k elements closest to `x` in the array ([Leetcode #658](https://leetcode.com/problems/find-k-closest-elements/)).
 
-The solution is very straightforward: find the lower bound or upper bound of the element in the array using built-in binary search, then expand the range using 2 indexes. This was initial solution.
+The solution is very straightforward: find the lower bound or upper bound of the element in the array using built-in binary search, then expand the range using 2 indexes.
 
 This was my initial solution:
 
