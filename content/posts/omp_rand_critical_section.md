@@ -1,5 +1,6 @@
 ---
 title: "OpenMP and rand() function - A small story"
+type: "post"
 date: 2023-01-07T18:35:13+05:30
 draft: false
 tags: [c, performance]

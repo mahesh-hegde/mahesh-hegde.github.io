@@ -1,5 +1,6 @@
 ---
 title: "Non-algorithm optimization of K closest elements Java solution"
+type: "post"
 date: 2023-03-21T07:07:17+05:30
 draft: false
 tags: [leetcode, java]

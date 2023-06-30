@@ -1,53 +1,49 @@
 baseURL = "https://mahesh-hegde.github.io/"
-languageCode = "en-us"
+languageCode = "en"
 title = "Mahesh's Blog"
-theme = "archie"
+theme = "gokarna"
 
 # Code Highlight
-pygmentsstyle = "monokai"
-pygmentscodefences = true
-pygmentscodefencesguesssyntax = true
-
-paginate=3
 
 [params]
-mode="toggle"
-useCDN=true
+	showPostsOnHomePage = "recent"
+	enableRobotsTXT = true
 
-[[params.social]]
-name = "GitHub"
-icon = "github"
-url = "https://github.com/mahesh-hegde"
+[menu]
+  [[menu.main]]
+    # Unique identifier for a menu item
+    identifier = "posts"
 
-[[params.social]]
-name = "Twitter"
-icon = "twitter"
-url = "https://twitter.com/never_inline/"
+    url = "/posts/"
+    
+    # You can add extra information before the name (HTML format is supported), such as icons
+    pre = ""
 
-[[params.social]]
-name = "LinkedIn"
-icon = "linkedin"
-url = "https://www.linkedin.com/in/mahesh-bhaskar-hegde"
+    # You can add extra information after the name (HTML format is supported), such as icons
+    post = ""
 
-# Main menu Items
+    # Display name
+    name = "Posts"
 
-[[menu.main]]
-name = "Home"
-url = "/"
-weight = 1
+    # Weights are used to determine the ordering
+    weight = 1
 
-[[menu.main]]
-name = "All posts"
-url = "/posts"
-weight = 2
+  [[menu.main]]
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags/"
+    weight = 2
 
-[[menu.main]]
-name = "About"
-url = "/about"
-weight = 3
-
-[[menu.main]]
-name = "Tags"
-url = "/tags"
-weight = 4
+  [[menu.main]]
+    identifier = "About"
+    name = "About"
+    url = "/about/"
+    weight = 3
+ 
+  [[menu.main]]
+    identifier = "github"
+    url = "https://github.com/mahesh-hegde"
+    weight = 4
+    # We use feather-icons: https://feathericons.com/
+    pre = "<span data-feather='github'></span>"
 
