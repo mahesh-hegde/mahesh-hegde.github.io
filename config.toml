@@ -47,3 +47,9 @@ theme = "gokarna"
     # We use feather-icons: https://feathericons.com/
     pre = "<span data-feather='github'></span>"
 
+  [[menu.main]]
+    identifier = "linkedin"
+    url = "https://www.linkedin.com/in/mahesh-bhaskar-hegde/"
+    weight = 5
+    # We use feather-icons: https://feathericons.com/
+    pre = "<span data-feather='linkedin'></span>"

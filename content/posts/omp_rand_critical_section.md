@@ -69,3 +69,7 @@ But for the purpose of the lab, I get a decent graph which shows an increase in 
 
 ![After eliminating critical section](/images/omp_rand_critical_section/Screenshot_After.png)
 
+---
+
+Update (July 02): This [reddit thread](https://old.reddit.com/r/C_Programming/comments/14oib3m/openmp_and_rand_function_a_small_story/) is very informative discussion on this post. Especially [this comment by u/skeeto](https://old.reddit.com/r/C_Programming/comments/14oib3m/openmp_and_rand_function_a_small_story/jqdncfj/) recommends to use a single global seed than `clock()` in every thread.
+
