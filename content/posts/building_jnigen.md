@@ -94,7 +94,7 @@ Jni.findJClass("android/os/SystemClock").use(
 
 These are "stringy" APIs which are only supposed to be for one-off uses where you can't generate code, and debugging. The actual `jnigen`-generated bindings will use slightly lower level APIs, storing method references etc.. into class fields when appropriate.
 
-[Screenshot of an Example app Demonstrating various JNI calls](images/building_jnigen/Dart_JNI_Example_Screenshot.png)
+![Screenshot of an Example app Demonstrating various JNI calls](/images/building_jnigen/Dart_JNI_Example_Screenshot.png)
 
 ## Parsing Java libraries
 
@@ -163,7 +163,7 @@ CheckJNI on Android has been quite helpful. In the beginning, some functionality
 
 Performance on small tests seems good so far. On a synthetic benchmark which mainly measured trivial calls, we can see more than 10x average improvement over method channels. In practice, if you call into Java, Java code needs to justify it by doing some heavy-lifting anyway. So I believe the main value of the code-generation interop is ergonomics, and then performance.
 
-[Some rudimentary benchmarks measuring the overhead against platform channels](/images/building_jnigen/rudimentary_benchmarks.png)
+![Some rudimentary benchmarks measuring the overhead against platform channels](/images/building_jnigen/rudimentary_benchmarks.png)
 
 ## Future work
 
