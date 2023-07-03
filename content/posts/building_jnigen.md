@@ -34,7 +34,7 @@ As a rule of thumb, everything about Java interop (runtime, parsing, build) is l
 
 The aim of this post is to give a glance of various architectural and design decisions, as well as the lessons I learned from this project.
 
-_[TODO: A high level architecture diagram]_
+__TODO: A High level Architecture Diagram:__
 
 ## JNI runtime support
 
@@ -94,7 +94,7 @@ Jni.findJClass("android/os/SystemClock").use(
 
 These are "stringy" APIs which are only supposed to be for one-off uses where you can't generate code, and debugging. The actual `jnigen`-generated bindings will use slightly lower level APIs, storing method references etc.. into class fields when appropriate.
 
-_Todo: Screenshot of example application with one-off JNI calls_
+[Screenshot of an Example app Demonstrating various JNI calls](images/building_jnigen/Dart_JNI_Example_Screenshot.png)
 
 ## Parsing Java libraries
 
@@ -129,7 +129,7 @@ The long-term plan is to do some benchmarking and discard C-based bindings. Pure
 
 The only disadvantage at the time of implementation was the unavailability of FFI varargs, requiring a native allocation for each call to pass the arguments as an array. Now that FFI varargs are available in Dart, I expect this gap to reduce soon.
 
-## Build system integrations
+## Package manager integrations
 
 As previously mentioned, the source code needs to be well formed for parsing. Most Java code in real world, especially Android code, will have bunch of dependencies which are difficult to procure manually. It's desirable to have a way to get these dependencies from `maven` or `gradle`.
 
@@ -155,8 +155,6 @@ My initial plan was to expose `jnigen` as an API, so that users can write a dart
 
 Another nice effect of implementing YAML config is that it steered the design of configuration towards being more _declarative_ and tidy. In my initial design, user would've to imperatively call the maven utilities described above, using an API. Later, I just made it another configuration parameter, which is much nicer.
 
-One thing lost with YAML is the autocompletion
-
 ## Other stuff
 
 Code generation is heavily used even inside the project. One set of tests which test Dart+C bindings are replicated to test pure dart bindings. This can't be abstracted in code because imports will be different, so code generation is the practical option here. Similarly, a script written against `ffigen`'s internal AST representation is used to generate some C wrappers from `jni.h` of Android NDK.
@@ -165,11 +163,11 @@ CheckJNI on Android has been quite helpful. In the beginning, some functionality
 
 Performance on small tests seems good so far. On a synthetic benchmark which mainly measured trivial calls, we can see more than 10x average improvement over method channels. In practice, if you call into Java, Java code needs to justify it by doing some heavy-lifting anyway. So I believe the main value of the code-generation interop is ergonomics, and then performance.
 
-_TODO - Benchmarks image_
+[Some rudimentary benchmarks measuring the overhead against platform channels](/images/building_jnigen/rudimentary_benchmarks.png)
 
 ## Future work
 
-I have to admit that I underestimated the complexity of this project. It's usable in current state, but there's lot of work to be done.
+I have to admit that I underestimated the complexity of this project. It's usable in current state, but there's lot of work to be done. Having almost no prior experience with real world programming, I am perplexed at the architectural detail it took to get the smallest things working.
 
 After last December, I became busy with other stuff including college work, and only contributed to the project intermittently. During this time, Hossein from Dart team took up the project. He has developed some amazing features such as Generics, special support for common types (List, Set), and Kotlin support (including suspend functions).
 
@@ -186,9 +184,17 @@ Gradle integration as it exists today is a hack. It has to write a stub `build.g
 Requiring well-formed sources is another pain point. We would ideally have another more tolerant parser for partial sources, which would gracefully degrade when a symbol encountered in source is undefined. The plan is to implement such an option using an open source parsing library, or alter one (Starting from a grammar is impractical.)
 
 ### Performance
-Currently, overhead of JNI call appears to be around 10% of the method calls, from some basic benchmarking. More rigorous benchmarking is needed, of course.
+Currently, overhead of JNI call appears to be around 10% of the Flutter method channels, from some basic benchmarking. More rigorous benchmarking is needed, of course.
 
-It could be optimized further, but as explained above, overhead of the function calls themselves becomes less of a priority as the Java code does more and more heavy lifting. It's always recommended to keep the bridge between languages narrow, because interop will always have its cost.
+It could be optimized further, but it wouldn't be a very productive endaveour to benchmark it to hell - because real world usage patterns vary between platform channels and code-generation based interop.
+
+* If you're calling Java code, it has to be doing some heavy lifting, like calling some system APIs which cost more than the overhead of method call itself.
+
+* The difficulty of writing method channel code may force to keep the interface small with very few methods, which will usually have a positive impact on performance.
+
+* With channels, you can probably squeeze a little more performance by using `BinaryCodec` and writing tight ser/de code.
+
+It's always (whether using channels or JNI) a good practice to keep the interface between languages small.
 
 The niche performance opportunity with having JNI as interop layer instead of serialization is sharing native memory through `DirectByteBuffer`. It would be nice to have an API similar to `typed_data` which facilitates sharing memory.
 
@@ -228,11 +234,13 @@ It will be certainly interesting to see whether binary-deserializing the entire 
 
 `jnigen` was my first project with real world scope. I learned few valuable things about software engineering in general.
 
-1. __Get the minimal end-to-end code done first, add features later:__ Later I read "The Pragmatic Programmer", which calls it the "Tracer Bullets" approach. Having feedback on the code is important when developing. Few times, I made the mistake of getting lost trying to achive perfect results, despite the advice by my mentors.
+1. __Get the minimal end-to-end code done first, add features later:__ Later I read _"The Pragmatic Programmer"_, which calls it the "Tracer Bullets" approach. Having feedback on the code is important when developing. Few times, I made the mistake of getting lost trying to achive perfect results, despite the advice by my mentors.
 
-2. __Test too much rather than test too little:__ Our assumptions turn out to be wrong all the time. Code coverage is a useful thing to have, because it helps to figure out which parts of the code are in dire need of testing. I also relied heavily on integration tests for first few iterations, which turned out to be a wrong intuition. Integration tests are more complex to write and take more time to run. So it's better to make code more unit-testable.
+2. __Automate whenever possible:__ When I wrote steps including multiple commands in docs, Daco would usually suggest me to write a script for that instead. Dart streamlines this by having `tool/` directory in default project layout. This is a great advice because 1. A script is more reproducible and less error prone than a series of steps performed manually 2. Nobody reads documentation.
 
-3. __Think twice before implementing:__ I made lot of decisions which were found to be suboptimal. First I mapped each java package to one output Dart file, which turned out to be an uncanny valley between mapping one Dart file per class and writing all bindings to a single file.
+3. __Test too much rather than test too little:__ Our assumptions turn out to be wrong all the time. Code coverage is a useful thing to have, because it helps to figure out which parts of the code are in dire need of testing. I also relied heavily on integration tests for first few iterations, which turned out to be a wrong intuition. Integration tests are more complex to write and take more time to run. So it's better to make code more unit-testable, and codify every assumption into tests.
+
+4. __Think twice before implementing:__ I made lot of decisions which were found to be suboptimal. For example, first I mapped each java package to one output Dart file, which turned out to be an uncanny valley between mapping one Dart file per class and writing all bindings to a single file. It pays to focus on plus and minus of architecture upfront.
 
 ## Conclusion
 
