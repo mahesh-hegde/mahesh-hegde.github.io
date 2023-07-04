@@ -12,17 +12,25 @@ showTableOfContents: true
 >>
 > John Wick 4, (2023)
 
-It's been a long overdue to write a post about my past year's Google Summer of Code (GSoC) project. `jnigen` is an experimental bindings generator which aims to provide Java interoperability for Dart. It works by generating wrappers which call JNI through Dart's FFI (Foreign Function Interface).
+It's been a long overdue to write a post about my past year's Google Summer of Code (GSoC) project. [jnigen](https://github.com/dart-lang/jnigen) is an experimental bindings generator which aims to provide Java interoperability for Dart. It works by generating wrappers which call JNI through Dart's FFI (Foreign Function Interface).
 
-I developed the initial versions of this package under the guidance of Daco Harkes and Liam Appelbe from Dart language team. Hossein Yousefi from Dart team is developing the project further, adding many features such as Generics and Kotlin language support.
+I developed the initial versions of this package under the guidance of Daco Harkes and Liam Appelbe from Dart team. Hossein Yousefi from Dart team is developing the project further, adding many features such as Generics and Kotlin language support.
 
 ## Why?
 
-The current way of accessing platform APIs on Flutter is Method Channels. Channels neatly avoid the intricacies of native language interop, by using an RPC like mechanism instead. However, there are a few drawbacks - all calls to method channels have to be asynchronous, and sharing memory is not possible. Perhaps more important, currently the use of method channels requires writing quite a bit of boilerplate. [^pigeon]
+The current way of accessing platform APIs on Flutter is Method Channels. Channels neatly avoid the intricacies of native language interop, by using an message passing mechanism instead. However, there are a few drawbacks to this:
 
-Therefore, it's desirable to have an automatic bindings generator for Java libraries, for both ergonomics reasons. Using FFI instead of method channels enables better performance and eliminates the need for asynchrony as well.
+* all calls to method channels have to be asynchronous
 
-Dart already has an excellent bindings generator for C, called `ffigen`. It was written 2 years ago by Prerak Mann, in 2020 GSoC. It has been later extended to support Objective-C as well. It uses `libclang` to parse the C headers and generate wrapper code for calling them. The goal of `jnigen` was to provide similar facility for Java libraries.
+* sharing memory is not possible.
+
+* De/serialization of data across the language boundary is relatively expensive
+
+* Perhaps more important, currently the use of method channels requires writing quite a bit of boilerplate. [^pigeon]
+
+Therefore, it's desirable to have an automatic bindings generator for Java libraries, for ergonomics reasons. Using FFI instead of method channels enables better performance and eliminates the need for asynchrony as well.
+
+Dart already has an excellent bindings generator for C, called `ffigen`. It was written 2 years ago by Prerak Mann, in 2020 GSoC. It has been later extended to support Objective-C as well. It uses `libclang` to parse the C headers and generate wrapper code for calling them. The goal of `jnigen` was to provide similar facility for Java libraries, by combining Dart's FFI and Java Native Interface (JNI).
 
 We had the prior art of `ffigen` which simplified several decisions. However there were challenges unique to Java.
 
@@ -38,19 +46,21 @@ __TODO: A High level Architecture Diagram:__
 
 ## JNI runtime support
 
-JNI is an old native interface [^jni]. Therefore, lot of quirks have to be considered when our goal is to abstract the JNI to a high level language like Dart.
+JNI is an native interface designed with C interop in mind [^jni]. Therefore, lot of quirks have to be considered when our goal is to abstract the JNI to a high level language like Dart.
 
 ### Differences between platforms
 On Android, Flutter application runs embedded in Android JVM. Therefore the VM already exists. We just initialize the JNI using a plugin, and also obtain a reference to application context.
 
 On standalone targets (Flutter Desktop and standalone Dart), there's no JVM. On initialization, a JVM has to be spawned, using the JRE available on the machine. If you intend to use some external libraries, (like the PDFBox library we use in one of the example), the JAR files must be provided as classpath.
 
-Besides, we have a support library written in C. It's packaged automatically with Flutter apps since it's a native plugin. However, this library's path must be provided with standalone.
+Besides, using `jnigen` requires support library written in C. It's packaged automatically with Flutter apps since it's a native plugin. However, this library's path must be provided with standalone.
 
-99% of real world application of Java interop will be on Android. There are enough quirks in standalone support [^jvm_lazy_load] that one of them can run for the president of a European country. Then why take the pain to implement support for standalone targets? _Having standalone support provides a means to do proper unit testing of support library as well as generated bindings._
+99% of real world application of Java interop will be on Android. There are enough quirks in standalone support [^jvm_lazy_load] that they outnumber the population of some European countries.
+
+Then why take the pain to implement support for standalone targets? __Having standalone support enables unit testing of support library & generated bindings.__
 
 ### Thread-local this, thread-local that
-JNI is supposed for use by C / C++, not a higher level language like Dart. `JNIEnv` struct, basically a vtable of 200+ functions, provides the entry point for most functionality of the JNI. Unfortunately this struct is valid only in the thread it is obtained.
+`JNIEnv` struct, basically a vtable of 200+ functions, provides the entry point for most functionality of the JNI. Unfortunately this struct is valid only in the thread it is obtained.
 
 Dart being a high level language, Thread pinning is [not yet supported](https://github.com/dart-lang/sdk/issues/46943), and we didn't want to rely on implementation details of threading, in presence of async-await in the language. Thus the `JNIEnv *` was wrapped in a `thread_local`. This singleton design was not really a problem, because there can be at most 1 JVM in a process, anyway.
 
@@ -121,13 +131,49 @@ Besides, such an implementation will be fairly verbose with the features current
 
 ## Generating code
 
-Unlike what we expected in the beginning of the project, a significant portion of effort has gone to the support library and parsing, and less to the actual generated code. Code generation is basically templated string concatenation. The generated code contains functions which call the corresponding C function.
+Unlike what we expected in the beginning of the project, a significant portion of effort has gone to the support library and parsing, and less to the generated code. Code generation is basically templated string concatenation. The generated code contains functions which call the corresponding C function.
 
 The initial plan was to have each Java symbol generate a wrapper function in C, and have the Dart wrapper call this C wrapper. In the hindsight, this C function should not even be required because we can factor most calling patterns into few Dart functions, and factor them into the support library's dart interface. I wish this was the path I followed from the beginning. Currently we have both versions of bindings (Pure dart and Dart+C). They're both tested with same test cases.
 
 The long-term plan is to do some benchmarking and discard C-based bindings. Pure dart bindings have the advantage of not complicating the build system. They can be just built as normal flutter package without any native dependency except the JNI support library. Further, it's only dart code and lends to tree shaking, unlike the C bindings which have to be built as shared library.
 
 The only disadvantage at the time of implementation was the unavailability of FFI varargs, requiring a native allocation for each call to pass the arguments as an array. Now that FFI varargs are available in Dart, I expect this gap to reduce soon.
+
+For sake of completeness, here's what our `SystemClock.uptimeMillis` binding looks like in generated code.
+
+```dart
+  static final _id_uptimeMillis = jni.Jni.accessors
+      .getStaticMethodIDOf(_class.reference, r"uptimeMillis", r"()J");
+
+  /// from: static public native long uptimeMillis()
+  static int uptimeMillis() {
+    return jni.Jni.accessors.callStaticMethodWithArgs(
+        _class.reference, _id_uptimeMillis, jni.JniCallType.longType, []).long;
+  }
+```
+
+As you can guess, it can be called as easily as in java - `SystemClock.uptimeMillis()`.
+
+Not all calls will be this easy though. Sometimes there will be more boilerplate involved. All Java classes are wrapped as subclass of `JObject` type, which wraps a JNI global reference. This applies to Java `String` as well, which gets mapped to `JString` class in Dart. Therefore, passing Strings to Java methods requires calling `.toJString` extension method.
+
+Sometimes it's not possible to generate bindings for a required class, it can be still accessed through reflective APIs. This is a snippet from the examples in `jnigen` repo.
+
+```dart
+  final inputFile = Jni.newInstance(
+      "java/io/FileInputStream", "(Ljava/lang/String;)V", [file]);
+  final pdDoc = PDDocument.load6(inputFile);
+  int pages = pdDoc.getNumberOfPages();
+  final info = pdDoc.getDocumentInformation();
+  final title = info.getTitle();
+  final subject = info.getSubject();
+  final author = info.getAuthor();
+  stderr.writeln('Number of pages: $pages');
+  if (!title.isNull) {
+    stderr.writeln('Title: ${title.toDartString()}');
+  }
+```
+
+In this, we couldn't generate bindings for `FileInputStream` class[^stdlib_pain_point]. But it's still possible to use a `FileInputStream` with the escape-hatch.
 
 ## Package manager integrations
 
@@ -167,7 +213,7 @@ Performance on small tests seems good so far. On a synthetic benchmark which mai
 
 ## Future work
 
-I have to admit that I underestimated the complexity of this project. It's usable in current state, but there's lot of work to be done. Having almost no prior experience with real world programming, I am perplexed at the architectural detail it took to get the smallest things working.
+I have to admit that I underestimated the complexity of this project. It's usable in current state (at the time of writing this), but there's lot of work to be done. Having almost no prior experience with real world programming, I am perplexed at the architectural detail it took to get the smallest things working.
 
 After last December, I became busy with other stuff including college work, and only contributed to the project intermittently. During this time, Hossein from Dart team took up the project. He has developed some amazing features such as Generics, special support for common types (List, Set), and Kotlin support (including suspend functions).
 
@@ -186,7 +232,7 @@ Requiring well-formed sources is another pain point. We would ideally have anoth
 ### Performance
 Currently, overhead of JNI call appears to be around 10% of the Flutter method channels, from some basic benchmarking. More rigorous benchmarking is needed, of course.
 
-It could be optimized further, but it wouldn't be a very productive endaveour to benchmark it to hell - because real world usage patterns vary between platform channels and code-generation based interop.
+It could be optimized further, but it wouldn't be a very productive endaveour to microbenchmark extensively - because real world usage patterns vary between platform channels and code-generation based interop.
 
 * If you're calling Java code, it has to be doing some heavy lifting, like calling some system APIs which cost more than the overhead of method call itself.
 
@@ -240,11 +286,11 @@ It will be certainly interesting to see whether binary-deserializing the entire 
 
 3. __Test too much rather than test too little:__ Our assumptions turn out to be wrong all the time. Code coverage is a useful thing to have, because it helps to figure out which parts of the code are in dire need of testing. I also relied heavily on integration tests for first few iterations, which turned out to be a wrong intuition. Integration tests are more complex to write and take more time to run. So it's better to make code more unit-testable, and codify every assumption into tests.
 
-4. __Think twice before implementing:__ I made lot of decisions which were found to be suboptimal. For example, first I mapped each java package to one output Dart file, which turned out to be an uncanny valley between mapping one Dart file per class and writing all bindings to a single file. It pays to focus on plus and minus of architecture upfront.
+4. __Contemplate the Big Picture before implementation:__ I made lot of decisions which were found to be suboptimal. For example, first I mapped each java package to one output Dart file, which turned out to be an uncanny valley between mapping one Dart file per class and writing all bindings to a single file. It pays to focus on plus and minus of architecture upfront.
 
 ## Conclusion
 
-I am optimistic that `jnigen` will be versatile Java interop toolkit for Dart one day. If it doesn't, we will have enough lessons that might help someone implementing JNI interop for some other language.
+I am optimistic that `jnigen` will be versatile Java (and Kotlin) interop toolkit for Dart one day. If it doesn't, we will have enough lessons that might help someone implementing JNI interop for some other language.
 
 Personally, participating in this project has been a skill upgrade for me.
 
@@ -260,3 +306,4 @@ I'd like to thank the Dart team members, especially Daco, Liam and Hossein, for 
 [^kotlin_parser_plans]: We are considering parsing Kotlin sources through a documentation engine such as Dokka, or even parsing the JavaDoc directly.
 [^real_world_examples]: I believe these are more illustrative than calling an integer / double function. These examples already involved solving the class loader problem and figuring out a way to get application context on Android.
 [^jvm_lazy_load]: One of such surprises is that, on Windows, you have to link the JNI libraries using `DELAYLOAD` linker flags, or else it fails to load with an obscure error code. It reminds me of `No such file or directory` error in Linux, which can in fact happen due to a missing library.
+[^stdlib_pain_point]: It's certainly possible to bind to standard library classes. In this standalone example however, we couldn't do this without adding a system-dependent path to config. [in_app_java](https://github.com/dart-lang/jnigen/tree/main/jnigen/example/in_app_java) example in jnigen repo shows an example without much extra configuration. With some circus around module layout, it's also possible to use Android SDK 28 sources, which are well-formed. Here's [an example](https://github.com/mahesh-hegde/java_jni_sample).
