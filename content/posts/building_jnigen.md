@@ -42,7 +42,9 @@ As a rule of thumb, everything about Java interop (runtime, parsing, build) is l
 
 The aim of this post is to give a glance of various architectural and design decisions, as well as the lessons I learned from this project.
 
-__TODO: A High level Architecture Diagram:__
+Before we start, here's a post-facto, approximately-correct architecture diagram which might explain what I am actually trying to build:
+
+![An Approximate Architecture Diagram](/images/building_jnigen/jnigen_architecture.png)
 
 ## JNI runtime support
 
@@ -278,21 +280,32 @@ It will be certainly interesting to see whether binary-deserializing the entire 
 
 ## Lessons learned
 
-`jnigen` was my first project with real world scope. I learned few valuable things about software engineering in general.
+`jnigen` was my first project with real world scope. I personally learned few valuable things about software engineering in general.
 
-1. __Get the minimal end-to-end code done first, add features later:__ Later I read _"The Pragmatic Programmer"_, which calls it the "Tracer Bullets" approach. Having feedback on the code is important when developing. Few times, I made the mistake of getting lost trying to achive perfect results, despite the advice by my mentors.
+### Aggressive Automation
+The basic principle of our profession is that computer can do repetitive things much, much better than we can. Whenever there's a repetitive task, I was adviced to create a script for that than documenting the commands for that.
 
-2. __Automate whenever possible:__ When I wrote steps including multiple commands in docs, Daco would usually suggest me to write a script for that instead. Dart streamlines this by having `tool/` directory in default project layout. This is a great advice because 1. A script is more reproducible and less error prone than a series of steps performed manually 2. Nobody reads documentation.
+Sometimes it appears automating something is not worth it because initial automation effort exceeds the (apparent) time saved. That sentiment, however, neglects the reproducibility benefit of scripting something.
 
-3. __Test too much rather than test too little:__ Our assumptions turn out to be wrong all the time. Code coverage is a useful thing to have, because it helps to figure out which parts of the code are in dire need of testing. I also relied heavily on integration tests for first few iterations, which turned out to be a wrong intuition. Integration tests are more complex to write and take more time to run. So it's better to make code more unit-testable, and codify every assumption into tests.
+Something can take 30 second and may appear "not worth scripting" when you have full context of the code. However, the 30 second may become 10 minutes once you lose context, or someone else has to perform the same sequence of 5 commands. I have come to firmly believe reproducibility and knowledge transfer effects of automating things are worth more than the initial time investment in most cases.
 
-4. __Contemplate the Big Picture before implementation:__ I made lot of decisions which were found to be suboptimal. For example, first I mapped each java package to one output Dart file, which turned out to be an uncanny valley between mapping one Dart file per class and writing all bindings to a single file. It pays to focus on plus and minus of architecture upfront.
+### Testing
+Perhaps due to the criminal disconnect from real world software engineering, most students are never taught how to test, and the importance of correct testing. The main purpose of having automated tests is not finding bugs - __it's about making changes peacefully without the fear of breaking something somewhere__. From that perspective, writing automated tests is mostly about velocity more than correctness.
+
+Another lesson was that tests are also code, and thus have to be abstracted properly. In practice I always found myself writing a `test_util` directory. Often, many tests follow same pattern and we can just vary the parameters. One great thing about Dart's testing libary compared to JUnit / TestNG etc.. is that a test is registered with single function call, which makes it less awkward to abstract away various patterns than with classes and annotations etc..
+
+I also learned some discipline with testing. Initially I had written too many end-to-end testing, and not many unit tests. As time passed, they took too much time to run.
+
+### Well architected is half done
+While its impossible to achive a perfect architecture, there are many things in `jnigen` which, had I architected them better, would've saved much time down the line.
+
+I assume the sense of good architecture comes only from practice and knowledge, which give the ability to see future trade-offs. It doesn't come from UML diagrams or buzzwords.
 
 ## Conclusion
 
 I am optimistic that `jnigen` will be versatile Java (and Kotlin) interop toolkit for Dart one day. If it doesn't, we will have enough lessons that might help someone implementing JNI interop for some other language.
 
-Personally, participating in this project has been a skill upgrade for me.
+Personally, participating in this project has been a skill upgrade for me. It was an architectural and implementation challenge, and I had so much lessons to learn.
 
 I'd like to thank the Dart team members, especially Daco, Liam and Hossein, for their guidance in the project. I'd also thank the GSoC program for giving a chance to me, someone with no other interesting programming background, to get involved.
 
