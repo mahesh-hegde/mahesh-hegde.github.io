@@ -299,7 +299,7 @@ I also learned some discipline with testing. Initially I had written too many en
 ### Well architected is half done
 While its impossible to achive a perfect architecture, there are many things in `jnigen` which, had I architected them better, would've saved much time down the line.
 
-I assume the sense of good architecture comes only from practice and knowledge, which give the ability to see future trade-offs. It doesn't come from UML diagrams or buzzwords.
+I have learned the sense of good design, apart from intuition, requires a broad knowledge - including the understanding of how things are done in various other software. While I don't claim to be good at high level design in this point of career, I can confidently claim that reading a book like "Architecture of Open Source Applications" is much more useful than following UML diagrams or buzzwords.
 
 ## Conclusion
 
