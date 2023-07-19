@@ -1,7 +1,7 @@
 ---
 title: "jnigen - Building JNI bindings generator for Dart Language"
 type: "post"
-date: 2023-06-29T07:49:21+05:30
+date: 2023-07-19T19:11:21+05:30
 tags: [dart, flutter, jnigen]
 showTableOfContents: true
 ---
