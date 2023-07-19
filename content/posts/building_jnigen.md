@@ -20,11 +20,11 @@ I developed the initial versions of this package under the guidance of Daco Hark
 
 The current way of accessing platform APIs on Flutter is Method Channels. Channels neatly avoid the intricacies of native language interop, by using an message passing mechanism instead. However, there are a few drawbacks to this:
 
-* all calls to method channels have to be asynchronous
+* All calls to method channels have to be asynchronous
 
-* sharing memory is not possible.
+* Sharing memory is not possible.
 
-* De/serialization of data across the language boundary is relatively expensive
+* De/serialization of data across the language boundary is relatively expensive.
 
 * Perhaps more important, currently the use of method channels requires writing quite a bit of boilerplate. [^pigeon]
 
@@ -48,7 +48,7 @@ Before we start, here's a post-facto, approximately-correct architecture diagram
 
 ## JNI runtime support
 
-JNI is an native interface designed with C interop in mind [^jni]. Therefore, lot of quirks have to be considered when our goal is to abstract the JNI to a high level language like Dart.
+JNI is an native interface designed with C interop in mind [^jni]. Therefore, a number of quirks have to be considered when our goal is to abstract the JNI to a high level language like Dart.
 
 ### Differences between platforms
 On Android, Flutter application runs embedded in Android JVM. Therefore the VM already exists. We just initialize the JNI using a plugin, and also obtain a reference to application context.
@@ -59,7 +59,7 @@ Besides, using `jnigen` requires support library written in C. It's packaged aut
 
 99% of real world application of Java interop will be on Android. There are enough quirks in standalone support [^jvm_lazy_load] that they outnumber the population of some European countries.
 
-Then why take the pain to implement support for standalone targets? __Having standalone support enables unit testing of support library & generated bindings.__
+Then why take the pain to implement support for standalone targets? __Having standalone support enables unit testing of support library & generated bindings.__ This feedback loop is invaluable.
 
 ### Thread-local this, thread-local that
 `JNIEnv` struct, basically a vtable of 200+ functions, provides the entry point for most functionality of the JNI. Unfortunately this struct is valid only in the thread it is obtained.
@@ -71,7 +71,7 @@ For the same reason, all references returned from JNI are converted to global re
 ### The curious case of the UI thread classloader
 Android has a concept of UI thread. Confusingly, in a Flutter app, this is different from the thread running Flutter application.
 
-Surprisingly, most platform classes are not available if you call JNI's `FindClass` from a flutter thread. This is because those threads have a much barebones classloader. The solution suggested by [Android Developers documentation](https://developer.android.com/training/articles/perf-jni) is to store a reference to original thread's class loader and call its loadClass method instead of JNI's `FindClass`, which worked for us.
+It turns out, most platform classes are not available if you call JNI's `FindClass` from a flutter thread. This is because those threads have a much barebones classloader. The solution suggested by [Android Developers documentation](https://developer.android.com/training/articles/perf-jni) is to store a reference to original thread's class loader and call its `loadClass` method instead of JNI's `FindClass`, which worked for us.
 
 ### The perils of dynamic loading
 The generated C code needs to call the function in C support library. At minimum, it should be able to access the shared context such as the class loader. However, we can't link them in compile time, with existing Flutter build system.
@@ -115,14 +115,14 @@ To generate bindings, we need to know the API of the library. If we consider a m
 
 This tree does not need to contain the information down to statement or expression level. However, AST is the closest term to what is required here. This hierarchical API information has to be parsed from some artifact, which is either JAR file, source code or JavaDoc HTML.
 
-Modern IDEs do a lot of similar things. For example, IntelliJ IDEA displays the documentation on hover, if you configure it to download JavaDocs or sources.
+(Modern IDEs do a lot of similar things. For example, IntelliJ IDEA displays the documentation on hover, if you configure it to download JavaDocs or sources.)
 
 ### parsing JARs vs parsing the source
 I first tried parsing the JAR files using the excellent `asm` library. But soon I stumbled upon the caveat, that compiled JARs do not contain parameter names for methods. [^params_in_jar]
 
 So I went ahead and created a prototype using [javaparser](https://github.com/javaparser/javaparser) library, which can parse the source files, and has a workable symbol resolver. However, later we decided in favor of OpenJDKs [doclet API](https://openjdk.org/groups/compiler/using-new-doclet.html), which has the benefit of being on par with the standard OpenJDK compilers. While the default doclet produces API documentation in HTML format, we can use the API to produce a JSON of API exported by the library, which represents the hierarchical tree structure.
 
-One drawback of doclet parser is that it requires the Java source code to be well formed. That is, if you have a source file referencing a class `Xyz`, this `Xyz` class has to exist somewhere in sources or classpath you provided to this tool. This means all compile time dependencies of the class has to be present. It's a significant limitation. There's a plan to support a more tolerant source parser, using QDox / JavaParser / Eclipse ECJ, which will eliminate the requirement of having all dependencies.
+One drawback of doclet parser is that it requires the Java source code to be well formed. That is, if you have a source file referencing a class `Xyz`, this `Xyz` class has to exist somewhere in sources or classpath you provided to this tool. This implies that all compile time dependencies of the class has to be present. It's a significant limitation. There's a plan to support a more tolerant source parser, using QDox / JavaParser / Eclipse ECJ, which will eliminate the requirement of having all dependencies.
 
 Later, we also added support for parsing JARs using `asm`. Because it's convenient for cases where we cannot get well-formed sources. Also, Kotlin support which was added later works using this parser.[^kotlin_parser_plans]
 
@@ -283,14 +283,14 @@ It will be certainly interesting to see whether binary-deserializing the entire 
 `jnigen` was my first project with real world scope. I personally learned few valuable things about software engineering in general.
 
 ### Aggressive Automation
-The basic principle of our profession is that computer can do repetitive things much, much better than we can. Whenever there's a repetitive task, I was adviced to create a script for that than documenting the commands for that.
+The basic principle of our profession is that computer can do repetitive things much, much better than we can. Whenever there's a repetitive task, I was adviced to create a script for that rather than documenting the commands for that.
 
 Sometimes it appears automating something is not worth it because initial automation effort exceeds the (apparent) time saved. That sentiment, however, neglects the reproducibility benefit of scripting something.
 
 Something can take 30 second and may appear "not worth scripting" when you have full context of the code. However, the 30 second may become 10 minutes once you lose context, or someone else has to perform the same sequence of 5 commands. I have come to firmly believe reproducibility and knowledge transfer effects of automating things are worth more than the initial time investment in most cases.
 
 ### Testing
-Perhaps due to the criminal disconnect from real world software engineering, most students are never taught how to test, and the importance of correct testing. The main purpose of having automated tests is not finding bugs - __it's about making changes peacefully without the fear of breaking something somewhere__. From that perspective, writing automated tests is mostly about velocity more than correctness.
+Perhaps due to the disconnect from real world software engineering, most students are never taught how to test, and the importance of correct testing. The main purpose of having automated tests is not finding bugs - __it's about making changes peacefully without the fear of breaking something somewhere__. From that perspective, writing automated tests is mostly about velocity more than correctness.
 
 Another lesson was that tests are also code, and thus have to be abstracted properly. In practice I always found myself writing a `test_util` directory. Often, many tests follow same pattern and we can just vary the parameters. One great thing about Dart's testing libary compared to JUnit / TestNG etc.. is that a test is registered with single function call, which makes it less awkward to abstract away various patterns than with classes and annotations etc..
 
@@ -299,7 +299,15 @@ I also learned some discipline with testing. Initially I had written too many en
 ### Well architected is half done
 While its impossible to achive a perfect architecture, there are many things in `jnigen` which, had I architected them better, would've saved much time down the line.
 
-I have learned the sense of good design, apart from intuition, requires a broad knowledge - including the understanding of how things are done in various other software. While I don't claim to be good at high level design in this point of career, I can confidently claim that reading a book like "Architecture of Open Source Applications" is much more useful than following UML diagrams or buzzwords.
+I have learned the sense of good design, apart from intuition, requires a broad knowledge - including the understanding of how things are done in various other software.
+
+One small example is the command line option overrides. I implemented the overrides mechanism similar to system properties in various Java applications, (`-Dproperty.name=value`), with list values being delimited by `;`. This would help to change the properties for single invocation of the tool, which has been found quite useful.
+
+If I were to implement it today, I would consider arbitrary JSON overrides rather than splitting by `:` - which would've been more elegant and support more complex values. This realization occurred when I saw the override mechanism in `helm`.
+
+Another small example: in tests, we generate and compare bindings with a set of reference bindings. Instead of using string comparison, we found its a good idea to invoke `git diff --no-index`, which gives a better line-by-line diff.
+
+Similarly, keeping logs as files was inspired by CMake and `kdesrc-build`.
 
 ## Conclusion
 
@@ -318,5 +326,5 @@ I'd like to thank the Dart team members, especially Daco, Liam and Hossein, for 
 [^bouncycastle]: An observant reader will see that Bouncy Castle dependencies are specified explicitly. These aren't hard dependencies of PDFBox but required transitively by most of the Java code we parse.
 [^kotlin_parser_plans]: We are considering parsing Kotlin sources through a documentation engine such as Dokka, or even parsing the JavaDoc directly.
 [^real_world_examples]: I believe these are more illustrative than calling an integer / double function. These examples already involved solving the class loader problem and figuring out a way to get application context on Android.
-[^jvm_lazy_load]: One of such surprises is that, on Windows, you have to link the JNI libraries using `DELAYLOAD` linker flags, or else it fails to load with an obscure error code. It reminds me of `No such file or directory` error in Linux, which can in fact happen due to a missing library.
+[^jvm_lazy_load]: One of such surprises is that, on Windows, you have to link the JVM libraries using `DELAYLOAD` linker flags, or else it fails to load with a generic error code. It reminds me of `No such file or directory` error in Linux, which can in fact happen due to a missing library.
 [^stdlib_pain_point]: It's certainly possible to bind to standard library classes. In this standalone example however, we couldn't do this without adding a system-dependent path to config. [in_app_java](https://github.com/dart-lang/jnigen/tree/main/jnigen/example/in_app_java) example in jnigen repo shows an example without much extra configuration. With some circus around module layout, it's also possible to use Android SDK 28 sources, which are well-formed. Here's [an example](https://github.com/mahesh-hegde/java_jni_sample).
