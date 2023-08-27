@@ -1,7 +1,7 @@
 ---
 title: "Reading List"
 date: 2023-08-27T22:37:36+05:30
-draft: true
+draft: false
 type: page
 showTableOfContents: true
 ---
