@@ -7,7 +7,7 @@ tags: [docker, linux]
 showTableOfContents: true
 ---
 
-I recently discovered the concept of [distroless](https://github.com/GoogleContainerTools/distroless) docker images. Although I recently discovered it, its quite a few years old.[^old]
+I recently discovered the concept of [distroless](https://github.com/GoogleContainerTools/distroless) docker images. However, this project is quite a few years old.[^old]
 
 The name may be quite misleading (much like "serverless") - as distroless images are actually based on Debian (currently Debian 11, Bullseye). However, they don't contain most of the stuff which is there in standard debian image, which such as all the command line executables (`coreutils` etc..)
 
