@@ -40,7 +40,7 @@ volumes:
 
 I have kept the passwords as environment variables. But it shouldn't matter for most local environments if you hardcode them.
 
-Replace the MYSQL_DATABASE by the DB name used by the application code.
+Replace the value of MYSQL_DATABASE by the DB name used by the application code.
 
 Usage is fairly straightforward. Just make sure to run these commands in same directory as `docker-compose.yml` (or pass the file explicitly through `-f` flag).
 
