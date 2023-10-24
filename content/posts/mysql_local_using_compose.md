@@ -4,6 +4,7 @@ date: 2023-10-24T15:31:43+05:30
 draft: false
 type: post
 showTableOfContents: true
+tags: [docker, mysql, developer-tools]
 ---
 
 ## Why?

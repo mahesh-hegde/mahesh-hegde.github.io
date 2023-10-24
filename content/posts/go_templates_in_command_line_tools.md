@@ -3,7 +3,7 @@ title: "Usefulness of Go templates in command line tools"
 date: 2023-08-09T08:10:08+05:30
 type: post
 draft: false
-tags: [go, "command line"]
+tags: [go, command-line]
 ---
 
 Almost every time I see `awk` in a shell script, it is to extract a particular column - like `awk '{print $1}'`.
