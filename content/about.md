@@ -5,13 +5,13 @@ date: 2022-09-13T07:54:01+05:30
 
 Hi, I am Mahesh.
 
-I am a soon-to-graduate Computer Science student, originally from rural North Kanara (Uttara Kannada) District.
+I am a Junior Software Engineer. I graduated in 2023 and currently working at Oracle India.
 
-Broadly, my interests in computer science revolve around systems, languages and tools. For the past one year, my work has revolved around compiler-adjacent topics and developer tools. My languages of choice are usually Go and Java.
+I'm originally from rural North Kanara (Uttara Kannada) District, in Karnataka, India.
 
-When not doing programming related work, I usually watch movies, and listen to songs from those movies. Sometimes I make memes, too.
+Broadly, my interests in computer science revolve around systems, languages and tools. My languages of choice are usually Go and Java.
 
-You can contact me through email, `net [dot] mahesh29 [at] gmail [dot] com`, or through my [LinkedIn profile](https://www.linkedin.com/in/mahesh-bhaskar-hegde/). I also have a [Twitter](https://twitter.com/never_inline) but I rarely check it.
+You can contact me through email, `net [dot] mahesh29 [at] gmail [dot] com`, or through my [LinkedIn profile](https://www.linkedin.com/in/mahesh-bhaskar-hegde/).
 
 ## Projects
 1. [jnigen](https://github.com/dart-lang/jnigen) - An experimental JNI bindings generator for Dart and Flutter. It's a GSoC 2022 Project.
