@@ -16,7 +16,8 @@ I find it a little hard to get the initial intuition &amp;amp; optimization from
 Problem statement You are given a binary array nums and an integer k.</description></item><item><title>OpenMP and rand() function - A small story</title><link>https://mahesh-hegde.github.io/posts/omp_rand_critical_section/</link><pubDate>Sat, 07 Jan 2023 18:35:13 +0530</pubDate><guid>https://mahesh-hegde.github.io/posts/omp_rand_critical_section/</guid><description>I have a parallel programming subject this semester, and as usual, there&amp;rsquo;s also a lab in which we try and execute small programs (mostly using OpenMP).
 First program is to find the value of Pi using Monte carlo methods. We have to then measure the performance with different number of threads, and tabulate it.
 Usually, when we add threads using pragma omp parallel for directive, we expect the program to take less time.</description></item><item><title>About Me</title><link>https://mahesh-hegde.github.io/about/</link><pubDate>Tue, 13 Sep 2022 07:54:01 +0530</pubDate><guid>https://mahesh-hegde.github.io/about/</guid><description>Hi, I am Mahesh.
-I am a Junior Software Engineer. I graduated in 2023 and currently working at Oracle India.
-I&amp;rsquo;m originally from rural North Kanara (Uttara Kannada) District, in Karnataka, India.
+I am a Junior Software Engineer.
 Broadly, my interests in computer science revolve around systems, languages and tools. My languages of choice are usually Go and Java.
-You can contact me through email, net [dot] mahesh29 [at] gmail [dot] com, or through my LinkedIn profile.</description></item></channel></rss>
+You can contact me through email, net [dot] mahesh29 [at] gmail [dot] com, or through my LinkedIn profile.
+Projects jnigen - An experimental JNI bindings generator for Dart and Flutter. It&amp;rsquo;s a GSoC 2022 Project.
+rrip - Bulk image downloader for Reddit.</description></item></channel></rss>
