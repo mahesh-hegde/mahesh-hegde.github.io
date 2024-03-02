@@ -89,8 +89,6 @@ Clicking around, I find `serveFile` and `ServeContent`. Using the VSCode debugge
 
 `serveFile` in turn calls `serveContent`, where the seek-back happens after calling `DetectContentType`. This `DetectContentType` is called when the file type can't be determined using file extension. [^seek_end]
 
-Turns out seeking is used to determine a. Content-Length header, and the MIME type of the file in certain cases.
-
 Now I am tired of clicking around, back to the stone age tools. Since `fs.File` does not implement seeker, someone's gotta be casting it to `io.Seeker` or a related type. It's probably the `http.FS` because it's returning us the filesystem.
 
 I am tired of clicking around anyway, and more than that, perhaps, fascinated by the stone age tools. Using `grep` again:
@@ -123,7 +121,7 @@ func FS(fsys fs.FS) FileSystem {
 }
 ```
 
-__TL;DR - `net/http` expects `fs.File` objects returned by our "virtual" filesystem, to implement `io.Seeker`, which is not the part of `fs.File` interface contract.__
+__TL;DR - `http.FS(fsys fs.FS)` expects `fs.File` objects returned by our "virtual" filesystem `fsys`, to implement `io.Seeker`, which is not the part of `fs.File` interface contract.__
 
 ![That is not part of our original agreement](/images/go-interface-smuggling/ragnar-lothbrok-not-original-agreement.png)
 
