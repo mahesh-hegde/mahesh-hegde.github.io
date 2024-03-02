@@ -3,7 +3,7 @@ title: "Exploring distroless docker images"
 date: 2023-08-27T20:53:10+05:30
 draft: false
 type: post
-tags: [docker, linux]
+tags: [Containers, Linux]
 showTableOfContents: true
 ---
 

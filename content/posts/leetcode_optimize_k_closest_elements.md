@@ -3,7 +3,7 @@ title: "Non-algorithm optimization of K closest elements Java solution"
 type: "post"
 date: 2023-03-21T07:07:17+05:30
 draft: false
-tags: [leetcode, java, performance]
+tags: [Leetcode, Java, Performance]
 ---
 
 I am a weird creature in my friend circle for using Java to do DSA problems. (Everyone else uses C++). I am not that good anyway in Leetcode, so at least I will learn some more Java by doing this.

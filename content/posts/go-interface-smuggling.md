@@ -3,7 +3,7 @@ title: "A tale of Interface Smuggling in Go net/http"
 date: 2024-03-01T18:59:00+05:30
 draft: true
 type: post
-tags: [golang, http, "programming techniques"]
+tags: [Go, HTTP, Debugging]
 showTableOfContents: true
 ---
 
@@ -195,6 +195,8 @@ func (s *StreamingZipEntryReader) Seek(offset int64, whence int) (int64, error) 
 Both implementations seem to perform well when zip contains small HTML / PNG files.
 
 However, when I tested with a zip file containing 1 GiB entry, the streaming version obviously performed much better, both in terms of speed and maximum resident set size (i.e peak memory usage).
+
+![some measurements (and some shell scripting stunts)](/images/go-interface-smuggling/stats_zserv.png)
 
 ## Appendix / Miscellaneous
 I used the filename `sample_txt` because if we named it `sample.txt`, the operation for Detecting MIME type would've never beeen triggered.

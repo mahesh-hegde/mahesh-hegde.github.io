@@ -3,7 +3,7 @@ title: "OpenMP and rand() function - A small story"
 type: "post"
 date: 2023-01-07T18:35:13+05:30
 draft: false
-tags: [c, performance]
+tags: [C, Performance]
 ---
 
 I have a parallel programming subject this semester, and as usual, there's also a lab in which we try and execute small programs (mostly using OpenMP).

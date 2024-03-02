@@ -3,7 +3,7 @@ title: "Leetcode #995: Minimum number of K bit flips"
 type: "post"
 date: 2023-03-20T11:03:56+05:30
 draft: false
-tags: [leetcode, algorithm]
+tags: [Leetcode, Algorithms]
 ---
 
 This is my solution and logic for [Problem 995](https://leetcode.com/problems/minimum-number-of-k-consecutive-bit-flips/) on Leetcode. This is actually copy of solution I posted on discussion forums.

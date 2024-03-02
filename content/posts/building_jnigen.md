@@ -2,7 +2,7 @@
 title: "Building jnigen - A Java bindings generator for Dart"
 type: "post"
 date: 2023-07-19T19:11:21+05:30
-tags: [dart, flutter, jnigen, java, developer-tools]
+tags: [Dart, Flutter, Java, "Developer tools"]
 showTableOfContents: true
 ---
 >> Caine: Then why bother?

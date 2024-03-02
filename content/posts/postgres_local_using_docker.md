@@ -2,7 +2,7 @@
 title: "Running PostgreSQL locally for back-end development using Docker"
 type: "post"
 date: 2023-05-13T11:36:39+05:30
-tags: [docker, postgres, developer-tools]
+tags: [Containers, Postgres, "Developer tools"]
 draft: false
 ---
 
