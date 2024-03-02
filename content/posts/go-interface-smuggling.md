@@ -79,9 +79,8 @@ Now I'm curious, why? (After all, I am just linearly downloading files, I am not
 
 ```
 [~/.local/go/src] $ grep -rn "seeker can't seek"
-net/http/fs.go
-213:var errSeeker = errors.New("seeker can't seek")
-245:                            Error(w, "seeker can't seek", StatusInternalServerError)
+net/http/fs.go:213:var errSeeker = errors.New("seeker can't seek")
+net/http/fs.go:245:                             Error(w, "seeker can't seek", StatusInternalServerError)
 ```
 
 Clicking around, I find `serveFile` and `ServeContent`. Using the VSCode debugger, I find out it's actually `serveFile` which is called during our `fileserver.ServeHTTP(w, req)` call.
