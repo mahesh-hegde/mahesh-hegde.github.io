@@ -1,13 +1,13 @@
 ---
 title: "A tale of Interface Smuggling in Go net/http"
 date: 2024-03-01T18:59:00+05:30
-draft: true
+draft: false
 type: post
 tags: [Go, HTTP, Debugging]
 showTableOfContents: true
 ---
 
-## The problem and the cause
+## The humble beginnings
 
 Once upon a time, I had a use case for serving the contents inside of a zip file over HTTP, preferably without unpacking the `.zip` to a temporary directory.
 
