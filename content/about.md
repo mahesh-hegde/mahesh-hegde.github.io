@@ -19,3 +19,5 @@ You can contact me through email, `net [dot] mahesh29 [at] gmail [dot] com`, or 
 3. [Avre](https://github.com/mahesh-hegde/Avre) - Experimental beanshell REPL for Android. It runs in-process so you can call functions offered by Android frameworks.
 
 4. [zserv](https://github.com/mahesh-hegde/zserv) - Small Go program to serve .zip files through HTTP without unpacking them.
+
+5. [promptsynth](https://github.com/mahesh-hegde/promptsynth) - Highly informative and cross-shell git prompt written as single executable in C.

@@ -17,7 +17,9 @@ This page includes an infrequently-updated of interesting articles I have read r
 
 * [__Command-line Tools can be 235x Faster than your Hadoop Cluster__](https://adamdrake.com/command-line-tools-can-be-235x-faster-than-your-hadoop-cluster.html) - Understanding execution models and operating systems is as important as building distributed systems that scale horizontally.
 
-* [Towards Modern Development of Cloud Applications](https://sigops.org/s/conferences/hotos/2023/papers/ghemawat.pdf) - This paper goes back to basics and looks at the ways we can reverse some of the complexity of kubernetes. It's written by the legendary Sanjay Ghemawat.
+* [__Towards Modern Development of Cloud Applications__](https://sigops.org/s/conferences/hotos/2023/papers/ghemawat.pdf) - This paper goes back to basics and looks at the ways we can reverse some of the complexity of kubernetes. It's written by the legendary Sanjay Ghemawat.
+
+* [__A Eulogy for DevOps__](A Eulogy for DevOps) - or, how to not do DevOps.
 
 ### Lifestyle, Productivity
 * [__"Why do Ivy League students self-sabotage?"__](https://movingthelimit.com/why-do-ivy-league-students-self-sabotage/) - This phenomenon is applicable outside the Ivy leagues, and beautifully explained.
