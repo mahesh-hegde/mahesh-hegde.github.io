@@ -1,6 +1,6 @@
 baseURL = "https://mahesh-hegde.github.io/"
 languageCode = "en"
-title = "Mahesh's Blog"
+title = "Loop Invariant"
 theme = "gokarna"
 
 # Code Highlight
@@ -11,27 +11,24 @@ theme = "gokarna"
   footer = "Mahesh Hegde"
 
 [menu]
+
   [[menu.main]]
     # Unique identifier for a menu item
     identifier = "posts"
-
     url = "/posts/"
-    
     # You can add extra information before the name (HTML format is supported), such as icons
-    pre = ""
-
+    pre = "<span data-feather='book-open'></span>"
     # You can add extra information after the name (HTML format is supported), such as icons
     post = ""
-
     # Display name
     name = "Posts"
-
     # Weights are used to determine the ordering
     weight = 1
 
   [[menu.main]]
     identifier = "tags"
     name = "Tags"
+    pre = "<span data-feather='tag'></span>"
     url = "/tags/"
     weight = 2
 
@@ -40,18 +37,14 @@ theme = "gokarna"
     name = "CV"
     url = "/cv/"
     weight = 3
+    pre = "<span data-feather='briefcase'></span>"
 
   [[menu.main]]
     identifier = "Readings"
     name = "Readings"
     url = "/readings/"
+    pre = "<span data-feather='book'></span>"
     weight = 4
-
-  [[menu.main]]
-    identifier = "About"
-    name = "About"
-    url = "/about/"
-    weight = 5
 
   [[menu.main]]
     identifier = "email"

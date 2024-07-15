@@ -8,6 +8,8 @@ A software engineer with an enthusiasm for systems-level thinking and scientific
 
 Interested in operating systems, compilers, dev tools, programming languages, back-end development and databases. Have some experience tackling difficult architectural, implementation and debugging challenges.
 
+Email: `net.mahesh29@gmail.com`
+
 ## Experience
 #### Software Developer, Oracle
 ##### Aug 2023 - Present
