@@ -4,16 +4,17 @@ date: 2022-09-13T07:54:01+05:30
 ---
 
 ## About
-A software engineer with an enthusiasm for systems-level thinking. Interested in operating systems, compilers, languages, back-end development and databases.
+A software engineer with an enthusiasm for systems-level thinking and scientific approach to engineering problems.
 
-Have some experience tackling difficult architectural and implementation challenges.
+Interested in operating systems, compilers, dev tools, programming languages, back-end development and databases. Have some experience tackling difficult architectural, implementation and debugging challenges.
 
 ## Experience
 #### Software Developer, Oracle
 ##### Aug 2023 - Present
 * Member of a fast-paced platform team, building a kubernetes based microservice platform for other teams to develop on.
-* Resolved issues related to identity, streaming, containers and logging, by utilizing architectural knowledge of cloud and distributed systems.
-* Implemented back-end services with Python and Oracle DB, and infrastructure automations with terraform, kubernetes, docker, CI / CD and shell scripts.
+* Resolved issues related to identity, streaming, containers, logging and more, by utilizing architectural knowledge of cloud and distributed systems.
+* Implemented and enhanced back-end services with Python and Oracle DB.
+* Developed infrastructure automations with terraform, kubernetes, docker, CI / CD and shell scripts.
 
 #### Software Engineer Intern, Dunzo
 ##### Jan 2023 - Jul 2023
