@@ -8,7 +8,7 @@ showTableOfContents: true
 
 This page includes an infrequently-updated list of interesting articles I have read recently and think to be significantly impactful.
 
-### Computer Science & Software Engineering
+### Computer Science - General
 These are generic - useful and educational software engineers regardless of what domain they work in.
 
 * [__"Worse is Better"__](https://www.dreamsongs.com/RiseOfWorseIsBetter.html) - An essay which describes how the "perfectly designed" software loses to "worse-designed" counterparts. I think every software engineer should read this once.
@@ -45,6 +45,17 @@ These are generic - useful and educational software engineers regardless of what
 * [__In Defense of Not-Invented-Here Syndrome__](https://www.joelonsoftware.com/2001/10/14/in-defense-of-not-invented-here-syndrome/) - Adds some nuance to "Buy vs Build" decision. Here's a quote
 
     > Not so fast, big boy! The Excel team’s ruggedly independent mentality also meant that they always shipped on time, their code was of uniformly high quality, and they had a compiler which, back in the 1980s, generated pcode and could therefore run unmodified on Macintosh’s 68000 chip as well as Intel PCs. The pcode also made the executable file about half the size that Intel binaries would have been, which loaded faster from floppy disks and required less RAM.
+
+### Computer Science - Specific topics
+* [[Book] __"Java Concurrency in Practice"__](https://jcip.net/) - It's a well-known and classic book, worth reading even if you are not going to write concurrent java code every day.
+
+* [[Book / OCW] __Mathematics for Computer Science__](https://ocw.mit.edu/courses/6-042j-mathematics-for-computer-science-spring-2015/pages/readings/) - I would say the proofs section is the most important for someone in CS. Proofs and Discrete math not emphasized enough in Indian schooling.
+
+* [[Book] __Beej's Guide to Network Programming__](https://beej.us/guide/bgnet/) - Perhaps the best accessible resource on sockets programming.
+
+* [__Git from the bottom up__](https://jwiegley.github.io/git-from-the-bottom-up/) - Git internals.
+
+* [Crafting Interpreters](https://craftinginterpreters.com/) and [Architecture of Open Source Applications](https://aosabook.org/en/) are good too, but I never managed to complete even half of these books!
 
 
 ### Lifestyle, Productivity
