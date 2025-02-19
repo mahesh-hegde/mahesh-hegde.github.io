@@ -31,7 +31,7 @@ Here's what a `launch.json` for launching IPython looks like - very straightforw
             "name": "IPython",
             "type": "debugpy",
             "request": "launch",
-            "program": "IPython",
+            "module": "IPython",
             "console": "integratedTerminal",
             "env": {
                 "SOME_VARIABLE": "VALUE"
