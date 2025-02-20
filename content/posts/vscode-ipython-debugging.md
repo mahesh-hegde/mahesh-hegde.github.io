@@ -1,5 +1,5 @@
 ---
-title: "Jumping to Debugger from IPython REPL in VSCode"
+title: "Jumping to VSCode Debugger from IPython"
 type: "post"
 date: 2025-02-19T10:18:17+05:30
 draft: false
