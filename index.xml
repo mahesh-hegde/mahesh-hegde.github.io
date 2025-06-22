@@ -35,23 +35,24 @@
 &lt;p>First program is to find the value of &lt;code>Pi&lt;/code> using Monte carlo methods. We have to then measure the performance with different number of threads, and tabulate it.&lt;/p>
 &lt;p>Usually, when we add threads using &lt;code>pragma omp parallel for&lt;/code> directive, we expect the program to take less time. Here&amp;rsquo;s an implementation that everyone wrote:&lt;/p></description></item><item><title>Curriculum Vitae</title><link>https://mahesh-hegde.github.io/cv/</link><pubDate>Tue, 13 Sep 2022 07:54:01 +0530</pubDate><guid>https://mahesh-hegde.github.io/cv/</guid><description>&lt;h2 id="about">About&lt;/h2>
 &lt;p>A software engineer with an enthusiasm for systems-level thinking and scientific approach to engineering problems.&lt;/p>
-&lt;p>Interested in operating systems, compilers, dev tools, programming languages, back-end development and databases. Have some experience tackling difficult architectural, implementation and debugging challenges.&lt;/p>
-&lt;p>Email: &lt;code>net.mahesh29@gmail.com&lt;/code>&lt;/p>
+&lt;p>Interested in operating systems, compilers, developer tools, programming languages, back-end development and databases. I have some experience tackling difficult architectural, implementation and debugging challenges.&lt;/p>
+&lt;p>Email: &lt;code>net.mahesh29&lt;/code> @ &lt;code>gmail.com&lt;/code>&lt;/p>
 &lt;h2 id="experience">Experience&lt;/h2>
 &lt;h4 id="software-developer-oracle">Software Developer, Oracle&lt;/h4>
 &lt;h5 id="aug-2023---present">Aug 2023 - Present&lt;/h5>
 &lt;ul>
 &lt;li>Member of a fast-paced platform team, building a kubernetes based microservice platform for other teams to develop on.&lt;/li>
-&lt;li>Resolved issues related to identity, streaming, containers, logging and more, by utilizing architectural knowledge of cloud and distributed systems.&lt;/li>
-&lt;li>Implemented and enhanced back-end services with Python and Oracle DB.&lt;/li>
+&lt;li>Implemented and enhanced back-end services for virtual machine management with cloud-native software stack consisting Python (FastAPI) and Oracle and Oracle NoSQL.&lt;/li>
+&lt;li>Resolved important issues related to identity, streaming, containers, logging and more, by utilizing architectural knowledge of cloud and distributed systems, unblocking critical initiatives.&lt;/li>
 &lt;li>Developed infrastructure automations with terraform, kubernetes, docker, CI / CD and shell scripts.&lt;/li>
+&lt;li>Designed and implemented a OpenAI-compatible proxy in Go to enable interoperability of in-house AI solutions with open-source tools.&lt;/li>
 &lt;/ul>
 &lt;h4 id="software-engineer-intern-dunzo">Software Engineer Intern, Dunzo&lt;/h4>
 &lt;h5 id="jan-2023---jul-2023">Jan 2023 - Jul 2023&lt;/h5>
 &lt;ul>
-&lt;li>Improved performance of the java test suite using connection pools, multithreading etc..&lt;/li>
+&lt;li>Improved performance of the java test suite by ~50% using connection pools, multithreading etc..&lt;/li>
 &lt;li>Developed test automations for ETL pipelines using JDBC and Google Cloud libaries.&lt;/li>
-&lt;li>Optimized GitHub Actions pipeline runtime by ~50% using maven cache.&lt;/li>
+&lt;li>Optimized GitHub Actions pipeline runtime by ~50% with a simple change using maven cache.&lt;/li>
 &lt;/ul>
 &lt;h4 id="open-source-contributor-google-summer-of-code">Open source contributor, Google Summer of Code&lt;/h4>
 &lt;h5 id="jun-2022---nov-2022">Jun 2022 - Nov 2022&lt;/h5>
