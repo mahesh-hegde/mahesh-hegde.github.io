@@ -30,6 +30,10 @@ These are generic - useful and educational software engineers regardless of what
 
     > If you have a huge amount of data or really need distributed processing, then tools like Hadoop may be required, but more often than not these days I see Hadoop used where a traditional relational database or other solutions would be far better in terms of performance, cost of implementation, and ongoing maintenance.
 
+* [__The grug-brained developer__](https://grugbrain.dev): A legendary article about simplicity and practicality in software development.
+
+    > early on in project everything very abstract and like water: very little solid holds for grug's struggling brain to hang on to. take time to develop "shape" of system and learn what even doing. grug try not to factor in early part of project and then, at some point, good cut-points emerge from code base
+
 * [__Towards Modern Development of Cloud Applications__](https://sigops.org/s/conferences/hotos/2023/papers/ghemawat.pdf) - This paper goes back to basics and looks at the ways we can reverse some of the complexity of kubernetes. It's written by the legendary Sanjay Ghemawat.
 
     > Fundamentally, this is because microservices conflate logical boundaries (how code is written) with physical boundaries (how code is deployed). In this paper, we propose a different programming methodology that decouples the two in order to solve these challenges. With our approach, developers write their applications as logical monoliths, offload the decisions of how to distribute and run applications to an automated runtime, and deploy applications atomically.
