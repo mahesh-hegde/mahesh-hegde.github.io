@@ -1,6 +1,6 @@
 
 ---
-title: "Things you can do with a debugger but not with printf"
+title: "Things you can do with a debugger but not with print debugging"
 date: 2025-06-21T15:38:10+05:30
 draft: false
 type: post
