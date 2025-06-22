@@ -31,7 +31,7 @@ Let's say I am debugging a network issue, and I need to point a URL to another t
 
 ## Using a debug configuration standardizes the project setup
 
-If your team is using VSCode or IntelliJ IDEs, it's possible to check in debug configuration files so that everyone can have a standardized local development flow. These files can specify `.env` files (for credentials), environment variables (common ones such as python / go / java options), as well as CLI arguments.
+If your team is using VSCode or IntelliJ IDEs, it's possible to check in debug configuration files so that everyone can have a standardized local development flow. These config files can specify `.env` files (for credentials), environment variables (common ones such as python / go / java options), as well as CLI arguments.
 
 Make it a convention to have a debug configuration for every entry-point of the application (such as the server or the CLI), this way a new contributor can have a decent head start with the codebase.
 
