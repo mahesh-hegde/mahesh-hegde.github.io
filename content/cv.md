@@ -6,23 +6,26 @@ date: 2022-09-13T07:54:01+05:30
 ## About
 A software engineer with an enthusiasm for systems-level thinking and scientific approach to engineering problems.
 
-Interested in operating systems, compilers, dev tools, programming languages, back-end development and databases. Have some experience tackling difficult architectural, implementation and debugging challenges.
+Interested in operating systems, compilers, developer tools, programming languages, back-end development and databases. I have some experience tackling difficult architectural, implementation and debugging challenges.
 
-Email: `net.mahesh29@gmail.com`
+Email: `net.mahesh29` @ `gmail.com`
 
 ## Experience
+
 #### Software Developer, Oracle
 ##### Aug 2023 - Present
+
 * Member of a fast-paced platform team, building a kubernetes based microservice platform for other teams to develop on.
-* Resolved issues related to identity, streaming, containers, logging and more, by utilizing architectural knowledge of cloud and distributed systems.
-* Implemented and enhanced back-end services with Python and Oracle DB.
+* Implemented and enhanced back-end services for virtual machine management with cloud-native software stack consisting Python (FastAPI) and Oracle and Oracle NoSQL.
+* Resolved important issues related to identity, streaming, containers, logging and more, by utilizing architectural knowledge of cloud and distributed systems, unblocking critical initiatives.
 * Developed infrastructure automations with terraform, kubernetes, docker, CI / CD and shell scripts.
+* Designed and implemented a OpenAI-compatible proxy in Go to enable interoperability of in-house AI solutions with open-source tools.
 
 #### Software Engineer Intern, Dunzo
 ##### Jan 2023 - Jul 2023
-* Improved performance of the java test suite using connection pools, multithreading etc..
+* Improved performance of the java test suite by ~50% using connection pools, multithreading etc..
 * Developed test automations for ETL pipelines using JDBC and Google Cloud libaries.
-* Optimized GitHub Actions pipeline runtime by ~50% using maven cache. 
+* Optimized GitHub Actions pipeline runtime by ~50% with a simple change using maven cache.
 
 #### Open source contributor, Google Summer of Code
 ##### Jun 2022 - Nov 2022
