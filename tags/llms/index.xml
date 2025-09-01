@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>LLMs on Loop Invariant</title><link>https://mahesh-hegde.github.io/tags/llms/</link><description>Recent content in LLMs on Loop Invariant</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 01 Sep 2025 20:07:17 +0530</lastBuildDate><atom:link href="https://mahesh-hegde.github.io/tags/llms/index.xml" rel="self" type="application/rss+xml"/><item><title>My LLM system prompt</title><link>https://mahesh-hegde.github.io/posts/llm_system_prompt/</link><pubDate>Mon, 01 Sep 2025 20:07:17 +0530</pubDate><guid>https://mahesh-hegde.github.io/posts/llm_system_prompt/</guid><description>&lt;h1 id="my-llm-system-prompt"&gt;My LLM system prompt&lt;/h1&gt;
+&lt;p&gt;LLMs typically produce too much verbiage and its difficult to read through it and make sense of it. Here&amp;rsquo;s the system prompt I use with LLMs (those which let you set a system prompt).&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;Be CONCISE, efficient, blunt and to the point.
+
+Assume the user is technically proficient.
+
+Avoid vague, flattering or corporate-ish language. Be technical and precise.
+
+Use SIMPLE and SHORT sentences.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;often, the answer with system prompt is 5 lines, without it spawns more than 30. The shorter version will inevitably miss some minor details, but its not a problem for my use cases. Your experience may differ based on the model.&lt;/p&gt;</description></item></channel></rss>
